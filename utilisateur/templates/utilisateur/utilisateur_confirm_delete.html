@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Confirmer la Suppression{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Confirmer la suppression de l'utilisateur "{{ utilisateur.username }}"</h2>
+    <form method="post">
+      {% csrf_token %}
+      <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+      <button type="submit" class="btn btn-danger">Supprimer</button>
+      <a href="{% url 'utilisateur:utilisateur_list' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+  </div>
+{% endblock %}

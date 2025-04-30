@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Liste des utilisateurs</h2>
+  <a href="{% url 'utilisateur:utilisateur_create' %}" class="btn btn-primary">Ajouter un utilisateur</a>
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>Nom d'utilisateur</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th>Téléphone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for utilisateur in utilisateurs %}
+        <tr>
+          <td>{{ utilisateur.username }}</td>
+          <td>{{ utilisateur.email }}</td>
+          <td>{{ utilisateur.get_role_display }}</td>
+          <td>{{ utilisateur.phone }}</td>
+          <td>
+            <a href="{% url 'utilisateur:utilisateur_update' utilisateur.pk %}" class="btn btn-warning btn-sm">Modifier</a>
+            <a href="{% url 'utilisateur:utilisateur_delete' utilisateur.pk %}" class="btn btn-danger btn-sm">Supprimer</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

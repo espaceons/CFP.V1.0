@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+  {% include 'includes/head.html' %}
+  <body class="d-flex flex-column min-vh-100">
+    <header class="bg-primary text-white py-3">
+      <div class="container">
+        <h1><a class="navbar-brand" href="{% url 'index' %}">Centre de Formation</a></h1>
+
+       
+            {% include 'includes/nav.html' %}
+    
+      </div>
+    </header>
+
+    <main class="flex-grow-1">
+      <div class="container py-4">
+        {% block content %}
+        <!-- Contenu spécifique à chaque page -->
+        {% endblock %}
+      </div>
+    </main>
+
+    {% include 'includes/footer.html' %}
+
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>
