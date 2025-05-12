@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Détail du Formateur{% endblock %}
+{% block content %}
+  <h1>{{ formateur.user.get_full_name }}</h1>
+  <p><strong>Spécialités :</strong>
+    {% for specialite in formateur.specialites.all %}
+      {{ specialite.nom }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+  </p>
+  <p><strong>Expérience :</strong> {{ formateur.experience }} ans</p>
+  <a href="{% url 'formateur:formateur_update' formateur.pk %}" class="btn btn-warning">Modifier</a>
+  <a href="{% url 'formateur:formateur_delete' formateur.pk %}" class="btn btn-danger">Supprimer</a>
+{% endblock %}

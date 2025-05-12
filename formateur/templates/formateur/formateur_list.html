@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Liste des Formateurs{% endblock %}
+{% block content %}
+  <h1>Liste des Formateurs</h1>
+  <a href="{% url 'formateur:formateur_create' %}" class="btn btn-primary mb-3">Ajouter un Formateur</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Spécialités</th>
+        <th>Expérience</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for formateur in formateurs %}
+        <tr>
+          <td>{{ formateur.user.get_full_name }}</td>
+          <td>
+            {% for specialite in formateur.specialites.all %}
+              {{ specialite.nom }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+          <td>{{ formateur.experience }} ans</td>
+          <td>
+            <a href="{% url 'formateur:formateur_detail' formateur.pk %}" class="btn btn-info btn-sm">Détails</a>
+            <a href="{% url 'formateur:formateur_update' formateur.pk %}" class="btn btn-warning btn-sm">Modifier</a>
+            <a href="{% url 'formateur:formateur_delete' formateur.pk %}" class="btn btn-danger btn-sm">Supprimer</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

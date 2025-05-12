@@ -7,7 +7,7 @@ app_name = 'specialite' # Nom de l'application pour les URL inversées
 urlpatterns = [
 
     # Liste des spécialités (Read - List)
-    path('liste/', views.SpecialiteListView.as_view(), name='specialite_list'),
+    path('liste/', views.specialite_list, name='specialite_list'),
 
     # Détail d'une spécialité (Read - Detail)
     path('<int:pk>/', views.SpecialiteDetailView.as_view(), name='specialite_detail'),
