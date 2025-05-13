@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Détail du Stagiaire{% endblock %}
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{ stagiaire.nom }} {{ stagiaire.prenom }}</h5>
+      <p class="card-text"><strong>Adresse :</strong> {{ stagiaire.adresse }}</p>
+      <p class="card-text"><strong>Téléphone :</strong> {{ stagiaire.tel }}</p>
+      <p class="card-text"><strong>Spécialité :</strong> {{ stagiaire.specialite }}</p>
+      <p class="card-text"><strong>Utilisateur :</strong> {{ stagiaire.user.get_full_name }}</p>
+      <p class="card-text"><strong>Date d'inscription :</strong> {{ stagiaire.date_inscription }}</p>
+      <a href="{% url 'stagiaire:stagiaire_update' stagiaire.pk %}" class="btn btn-warning">Modifier</a>
+      <a href="{% url 'stagiaire:stagiaire_delete' stagiaire.pk %}" class="btn btn-danger">Supprimer</a>
+    </div>
+  </div>
+{% endblock %}

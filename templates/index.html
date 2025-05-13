@@ -23,7 +23,7 @@
         <div class="card-body text-center">
           <h5 class="card-title">Stagiaires</h5>
           <p class="card-text">Consultez et modifiez les données des stagiaires.</p>
-          <a href="{% url 'stagiaire:index' %}" class="btn btn-primary">Accéder</a>
+          <a href="{% url 'stagiaire:stagiaire_list' %}" class="btn btn-primary">Accéder</a>
         </div>
       </div>
     </div>
@@ -40,6 +40,7 @@
     </div>
 
     <!-- Carte Utilisateur -->
+     {% if user.is_authenticated %}
     <div class="col">
       <div class="card h-100 shadow-sm">
         <div class="card-body text-center">
@@ -49,5 +50,6 @@
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
 {% endblock %}

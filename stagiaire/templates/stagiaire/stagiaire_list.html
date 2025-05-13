@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Liste des Stagiaires{% endblock %}
+{% block content %}
+  <h1>Liste des Stagiaires</h1>
+  <a href="{% url 'stagiaire:stagiaire_create' %}" class="btn btn-primary mb-3">Ajouter un Stagiaire</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Adresse</th>
+        <th>Téléphone</th>
+        <th>Spécialité</th>
+        <th>Formateur</th>
+        <th>Date d'inscription</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stagiaire in stagiaires %}
+        <tr>
+          <td>{{ stagiaire.nom }}</td>
+          <td>{{ stagiaire.prenom }}</td>
+          <td>{{ stagiaire.adresse }}</td>
+          <td>{{ stagiaire.tel }}</td>
+          <td>{{ stagiaire.specialite }}</td>
+          <td>{{ stagiaire.user.get_full_name }}</td>
+          <td>{{ stagiaire.date_inscription }}</td>
+          <td>
+            <a href="{% url 'stagiaire:stagiaire_detail' stagiaire.pk %}" class="btn btn-info btn-sm">Détails</a>
+            <a href="{% url 'stagiaire:stagiaire_update' stagiaire.pk %}" class="btn btn-warning btn-sm">Modifier</a>
+            <a href="{% url 'stagiaire:stagiaire_delete' stagiaire.pk %}" class="btn btn-danger btn-sm">Supprimer</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
