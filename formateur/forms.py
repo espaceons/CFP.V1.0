@@ -1,3 +1,4 @@
+# forms.py
 from django import forms
 from .models import Formateur
 from utilisateur.models import CustomUser
@@ -5,12 +6,12 @@ from utilisateur.models import CustomUser
 class FormateurForm(forms.ModelForm):
     class Meta:
         model = Formateur
-        fields = ['nom', 'prenom', 'adresse', 'tel', 'user', 'specialites', 'experience']
+        fields = ['nom', 'prenom', 'adresse', 'user', 'specialites', 'experience']
         widgets = {
             'nom': forms.TextInput(attrs={'class': 'form-control'}),
             'prenom': forms.TextInput(attrs={'class': 'form-control'}),
             'adresse': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'tel': forms.TextInput(attrs={'class': 'form-control'}),
+
             'user': forms.Select(attrs={'class': 'form-control'}),  # Assurez-vous de limiter le queryset ici si nécessaire
             'specialites': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'experience': forms.NumberInput(attrs={'class': 'form-control'}),

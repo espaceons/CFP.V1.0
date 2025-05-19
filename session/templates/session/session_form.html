@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %} {# Charge la librairie widget_tweaks pour styliser les champs #}
+
+{% block title %}
+    {% if form.instance.pk %}Modifier la Session{% else %}Créer une Session{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>{% if form.instance.pk %}Modifier la Session{% else %}Créer une Session{% endif %}</h1>
+
+        {# Affichage des messages Django #}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {# Affichage des erreurs globales du formulaire #}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {# Rendre les champs simples individuellement ou en utilisant une boucle pour certains #}
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    {{ form.nom.label_tag }}
+                    {% render_field form.nom class="form-control" %}
+                    {% if form.nom.errors %}
+                        <div class="alert alert-danger mt-1">{% for error in form.nom.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                    {% if form.nom.help_text %}
+                        <small class="form-text text-muted">{{ form.nom.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 mb-3">
+                    {{ form.date_debut.label_tag }}
+                    {% render_field form.date_debut class="form-control" %}
+                    {% if form.date_debut.errors %}
+                        <div class="alert alert-danger mt-1">{% for error in form.date_debut.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                    {% if form.date_debut.help_text %}
+                        <small class="form-text text-muted">{{ form.date_debut.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+                 <div class="col-md-3 mb-3">
+                    {{ form.date_fin.label_tag }}
+                    {% render_field form.date_fin class="form-control" %}
+                    {% if form.date_fin.errors %}
+                        <div class="alert alert-danger mt-1">{% for error in form.date_fin.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                    {% if form.date_fin.help_text %}
+                        <small class="form-text text-muted">{{ form.date_fin.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                 <div class="col-md-4 mb-3">
+                    {{ form.statut.label_tag }}
+                    {% render_field form.statut class="form-control" %}
+                    {% if form.statut.errors %}
+                        <div class="alert alert-danger mt-1">{% for error in form.statut.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                    {% if form.statut.help_text %}
+                        <small class="form-text text-muted">{{ form.statut.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+                 <div class="col-md-4 mb-3">
+                    {{ form.lieu.label_tag }}
+                    {% render_field form.lieu class="form-control" %}
+                    {% if form.lieu.errors %}
+                        <div class="alert alert-danger mt-1">{% for error in form.lieu.errors %}{{ error }}{% endfor %}</div>
+                    {% endif %}
+                    {% if form.lieu.help_text %}
+                        <small class="form-text text-muted">{{ form.lieu.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+                 <div class="col-md-4 mb-3">
+                    {{ form.capacite_maximale.label_tag }}
+                    {% render_field form.capacite_maximale class="form-control" %}
+                    {% if form.capacite_maximale.errors %}
+                        <div class="alert alert-danger mt-1">{% for error in form.capacite_maximale.errors %}{{ error{% endfor %}</div>
+                    {% endif %}
+                    {% if form.capacite_maximale.help_text %}
+                        <small class="form-text text-muted">{{ form.capacite_maximale.help_text|safe }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            {# Rendre les champs ManyToMany séparément avec une structure différente #}
+
+            <div class="mb-3">
+                {{ form.specialites.label_tag }}
+                {% render_field form.specialites class="form-control" %}
+                {% if form.specialites.errors %}
+                    <div class="alert alert-danger mt-1">{% for error in form.specialites.errors %}{{ error }}{% endfor %}</div>
+                {% endif %}
+                {% if form.specialites.help_text %}
+                    <small class="form-text text-muted">{{ form.specialites.help_text|safe }}</small>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.formateurs.label_tag }}
+                {% render_field form.formateurs class="form-control" %}
+                {% if form.formateurs.errors %}
+                    <div class="alert alert-danger mt-1">{% for error in form.formateurs.errors %}{{ error }}{% endfor %}</div>
+                {% endif %}
+                {% if form.formateurs.help_text %}
+                    <small class="form-text text-muted">{{ form.formateurs.help_text|safe }}</small>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.stagiaires.label_tag }}
+                {% render_field form.stagiaires class="form-control" %}
+                {% if form.stagiaires.errors %}
+                    <div class="alert alert-danger mt-1">{% for error in form.stagiaires.errors %}{{ error }}{% endfor %}</div>
+                {% endif %}
+                {% if form.stagiaires.help_text %}
+                    <small class="form-text text-muted">{{ form.stagiaires.help_text|safe }}</small>
+                {% endif %}
+            </div>
+
+            {# Le champ 'user' (OneToOneField) est généralement géré différemment, souvent dans l'admin ou via une vue spécifique #}
+            {# Si vous voulez l'inclure ici, vous pouvez le faire comme les autres champs simples #}
+             {% comment %}
+            <div class="mb-3">
+                {{ form.user.label_tag }}
+                {% render_field form.user class="form-control" %}
+                {% if form.user.errors %}
+                    <div class="alert alert-danger mt-1">{% for error in form.user.errors %}{{ error }}{% endfor %}</div>
+                {% endif %}
+                {% if form.user.help_text %}
+                    <small class="form-text text-muted">{{ form.user.help_text|safe }}</small>
+                {% endif %}
+            </div>
+            {% endcomment %}
+
+
+            <button type="submit" class="btn btn-success">Enregistrer</button>
+            <a href="{% url 'session:session_list' %}" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+{% endblock %}

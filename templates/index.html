@@ -39,6 +39,17 @@
       </div>
     </div>
 
+    <!-- Carte Session -->
+    <div class="col">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">Sessions</h5>
+          <p class="card-text">Consultez et modifiez les sessions de formation.</p>
+          <a href="{% url 'session:session_list' %}" class="btn btn-primary">Accéder</a>
+        </div>
+      </div>
+    </div>
+
     <!-- Carte Utilisateur -->
      {% if user.is_authenticated %}
     <div class="col">

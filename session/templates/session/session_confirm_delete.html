@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmer la Suppression de la Session{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Confirmer la Suppression</h1>
+
+        {# Affichage des messages Django #}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="alert alert-danger" role="alert">
+            <p>Êtes-vous sûr de vouloir supprimer la session : <strong>"{{ session.nom }}"</strong> ?</p>
+            <p>Cette action est irréversible.</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            {# Un formulaire POST est nécessaire pour la suppression #}
+            <button type="submit" class="btn btn-danger me-2">Confirmer la Suppression</button>
+            <a href="{% url 'session:session_detail' session.pk %}" class="btn btn-secondary">Annuler</a>
+            {# Ou rediriger vers la liste si vous préférez : #}
+            {# <a href="{% url 'session:session_list' %}" class="btn btn-secondary">Annuler</a> #}
+        </form>
+    </div>
+{% endblock %}

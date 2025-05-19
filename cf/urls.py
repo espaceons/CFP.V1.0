@@ -14,4 +14,5 @@ urlpatterns = [
     path('specialite/', include('specialite.urls')),
     path('stagiaire/', include('stagiaire.urls')),
     path('formateur/', include('formateur.urls')),
+    path('session/',include('session.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

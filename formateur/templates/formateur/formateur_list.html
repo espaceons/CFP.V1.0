@@ -10,7 +10,7 @@
             <th>Nom</th>
             <th>Prenom</th>
             <th>Adresse</th>
-            <th>Téléphone</th>
+            <th>tel</th>
             <th>Spécialités</th>
             <th>Expérience</th>
             <th>Actions</th>
@@ -22,7 +22,7 @@
             <td>{{ formateur.nom }}</td>
             <td>{{ formateur.prenom }}</td>
             <td>{{ formateur.adresse }}</td>
-            <td>{{ formateur.tel }}</td>
+            <td>{{ formateur.user.phone }}</td>
             <td>
                 {% for specialite in formateur.specialites.all %}
                     {{ specialite.nom }}{% if not forloop.last %}, {% endif %}

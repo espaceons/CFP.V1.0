@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Détails de la Session{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Détails de la Session : {{ session.nom }}</h1>
+
+        {# Affichage des messages Django #}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ session.nom }}</h5>
+                <p class="card-text"><strong>Date de Début :</strong> {{ session.date_debut|date:"Y-m-d" }}</p>
+                <p class="card-text"><strong>Date de Fin :</strong> {{ session.date_fin|date:"Y-m-d" }}</p>
+                <p class="card-text"><strong>Statut :</strong> {{ session.get_statut_display }}</p> {# Affiche la valeur lisible #}
+                <p class="card-text"><strong>Lieu :</strong> {{ session.lieu|default:"Non spécifié" }}</p> {# Affiche "Non spécifié" si le lieu est vide #}
+                <p class="card-text"><strong>Capacité Maximale :</strong> {{ session.capacite_maximale|default:"Illimitée" }}</p> {# Affiche "Illimitée" si la capacité est vide #}
+
+                <hr>
+
+                <h6>Spécialités :</h6>
+                <ul>
+                    {% for specialite in session.specialites.all %}
+                        <li>{{ specialite.nom }}</li>
+                    {% empty %}
+                        <li>Aucune spécialité assignée.</li>
+                    {% endfor %}
+                </ul>
+
+                <h6>Formateurs :</h6>
+                <ul>
+                    {% for formateur in session.formateurs.all %}
+                        <li>{{ formateur.nom }}  {{ formateur.prenom }}</li> {# Affiche le nom complet de l'utilisateur formateur #}
+                    {% empty %}
+                        <li>Aucun formateur assigné.</li>
+                    {% endfor %}
+                </ul>
+
+                <h6>Stagiaires :</h6>
+                <ul>
+                    {% for stagiaire in session.stagiaires.all %}
+                        <li>{{ stagiaire.nom }}  {{ stagiaire.prenom }}</li> {# Affiche le nom complet de l'utilisateur stagiaire #}
+                    {% empty %}
+                        <li>Aucun stagiaire inscrit.</li>
+                    {% endfor %}
+                </ul>
+
+                <hr>
+
+                <a href="{% url 'session:session_update' session.pk %}" class="btn btn-warning me-2">Modifier</a>
+                <a href="{% url 'session:session_delete' session.pk %}" class="btn btn-danger me-2">Supprimer</a>
+                <a href="{% url 'session:session_list' %}" class="btn btn-secondary">Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

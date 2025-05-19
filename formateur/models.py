@@ -10,7 +10,6 @@ class Formateur(models.Model):
     nom = models.CharField(max_length=255)
     prenom = models.CharField(max_length=255, null=True, blank=True)
     adresse = models.TextField()
-    tel = models.CharField(max_length=12, null=True, blank=True)
     specialites = models.ManyToManyField(Specialite)
     experience = models.IntegerField(default=0)
     

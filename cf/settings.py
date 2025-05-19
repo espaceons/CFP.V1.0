@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'specialite',
     'stagiaire',
     'formateur',
+    'session',
     'widget_tweaks',
 ]
 

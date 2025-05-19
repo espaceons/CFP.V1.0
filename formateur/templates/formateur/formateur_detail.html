@@ -6,6 +6,9 @@
 <h1>Détails du Formateur</h1>
 <p>Nom : {{ formateur.nom }}</p>
 <p>Prénom : {{ formateur.prenom }}</p>
+<p>Adresse : {{ formateur.adresse }}</p>
+<p>Tel : {{ formateur.user.phone }}</p>
+<p>statut : {{ formateur.user.is_active|yesno:"Actif,Désactivé" }}</p>
 <p>Expérience : {{ formateur.experience }} ans</p>
 <p>Spécialités : 
     {% for specialite in formateur.specialites.all %}

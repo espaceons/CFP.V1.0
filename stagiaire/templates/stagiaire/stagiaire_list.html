@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
+
 {% block title %}Liste des Stagiaires{% endblock %}
+
 {% block content %}
   <h1>Liste des Stagiaires</h1>
   <a href="{% url 'stagiaire:stagiaire_create' %}" class="btn btn-primary mb-3">Ajouter un Stagiaire</a>
   <table class="table">
     <thead>
       <tr>
+        <th>Utilisateur</th>
         <th>Nom</th>
         <th>Prénom</th>
         <th>Adresse</th>
         <th>Téléphone</th>
+        <th>Statut</th>
         <th>Spécialité</th>
         <th>Formateur</th>
         <th>Date d'inscription</th>
@@ -19,11 +23,13 @@
     <tbody>
       {% for stagiaire in stagiaires %}
         <tr>
+          <td>{{ stagiaire.user }}</td>
           <td>{{ stagiaire.nom }}</td>
           <td>{{ stagiaire.prenom }}</td>
           <td>{{ stagiaire.adresse }}</td>
-          <td>{{ stagiaire.tel }}</td>
-          <td>{{ stagiaire.specialite }}</td>
+          <td>{{ stagiaire.user.tel }}</td>  <!-- Ici on affiche le téléphone de l'utilisateur -->
+          <td>{{ stagiaire.statut }}</td>  <!-- Assurez-vous que ce champ existe dans le modèle Stagiaire -->
+          <td>{{ stagiaire.specialites.all|join:", " }}</td>  <!-- Affiche la liste des spécialités -->
           <td>{{ stagiaire.user.get_full_name }}</td>
           <td>{{ stagiaire.date_inscription }}</td>
           <td>
