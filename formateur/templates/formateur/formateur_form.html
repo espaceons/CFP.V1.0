@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Créer / Modifier un Formateur{% endblock %}
+
+{% block content %}
+<h1>{% if form.instance.id %}Modifier{% else %}Créer{% endif %} un Formateur</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Affiche tous les champs du formulaire -->
+    <button type="submit" class="btn btn-primary">{% if form.instance.id %}Modifier{% else %}Créer{% endif %}</button>
+</form>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

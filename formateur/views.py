@@ -1,51 +1,33 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
+from django.contrib import messages
 from .models import Formateur
 from .forms import FormateurForm
-from django.contrib import messages  # Pour les messages flash
 
+class FormateurCreateView(CreateView):
+    model = Formateur
+    form_class = FormateurForm
+    template_name = 'formateur/formateur_form.html'
+    success_url = reverse_lazy('formateur:formateur_list')
+
+    def form_valid(self, form):
+        formateur = form.save()
+        messages.success(self.request, f"Le formateur '{formateur.user.first_name} {formateur.user.last_name}' a été créé avec succès.")
+        return super().form_valid(form)
 
 class FormateurListView(ListView):
     model = Formateur
     template_name = 'formateur/formateur_list.html'
     context_object_name = 'formateurs'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['breadcrumb'] = [('Formateurs', '/formateur/')]
-        return context
+    
+    def get_queryset(self):
+        # Filtrer les formateurs basés sur le rôle de l'utilisateur
+        return Formateur.objects.filter(user__role='FORMATEUR', user__is_active=True) # Récupérer uniquement les formateurs qui sont actifs
 
 class FormateurDetailView(DetailView):
     model = Formateur
     template_name = 'formateur/formateur_detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['breadcrumb'] = [('Formateurs', '/formateur/'), (self.object.user.first_name, '')] # A améliorer avec l'URL detail
-        return context
-
-
-
-
-
-#----------
-class FormateurCreateView(CreateView):
-    model = Formateur
-    form_class = FormateurForm
-    template_name = 'formateur/formateur_form.html'
-    success_url = reverse_lazy('specialite:specialite_list')
-
-    def form_valid(self, form):
-        formateur = form.save()
-        messages.success(self.request, f"Le formateur '{formateur.nom}' a été créée avec succès.")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, "Veuillez corriger les erreurs dans le formulaire.")
-        return super().form_invalid(form)
-#----------
-
+    context_object_name = 'formateur'
 
 class FormateurUpdateView(UpdateView):
     model = Formateur
@@ -53,17 +35,17 @@ class FormateurUpdateView(UpdateView):
     template_name = 'formateur/formateur_form.html'
     success_url = reverse_lazy('formateur:formateur_list')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['breadcrumb'] = [('Formateurs', '/formateur/'), ('Modifier', '')]
-        return context
+    def form_valid(self, form):
+        formateur = form.save()
+        messages.success(self.request, f"Le formateur '{formateur.user.first_name} {formateur.user.last_name}' a été mis à jour avec succès.")
+        return super().form_valid(form)
 
 class FormateurDeleteView(DeleteView):
     model = Formateur
     template_name = 'formateur/formateur_confirm_delete.html'
     success_url = reverse_lazy('formateur:formateur_list')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['breadcrumb'] = [('Formateurs', '/formateur/'), ('Supprimer', '')]
-        return context
+    def delete(self, request, *args, **kwargs):
+        formateur = self.get_object()
+        messages.success(self.request, f"Le formateur '{formateur.user.first_name} {formateur.user.last_name}' a été supprimé avec succès.")
+        return super().delete(request, *args, **kwargs)

@@ -1,31 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Liste des utilisateurs</h2>
-  <a href="{% url 'utilisateur:utilisateur_create' %}" class="btn btn-primary">Ajouter un utilisateur</a>
-  <table class="table mt-3">
+<h2>Liste des utilisateurs</h2>
+<a href="{% url 'utilisateur:utilisateur_create' %}" class="btn btn-primary">Ajouter un utilisateur</a>
+<table class="table mt-3">
     <thead>
-      <tr>
-        <th>Nom d'utilisateur</th>
-        <th>Email</th>
-        <th>Rôle</th>
-        <th>Téléphone</th>
-        <th>Actions</th>
-      </tr>
+        <tr>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Statut</th>
+            <th>Téléphone</th>
+            <th>Actions</th>
+        </tr>
     </thead>
     <tbody>
-      {% for utilisateur in utilisateurs %}
+        {% for utilisateur in utilisateurs %}
         <tr>
-          <td>{{ utilisateur.username }}</td>
-          <td>{{ utilisateur.email }}</td>
-          <td>{{ utilisateur.get_role_display }}</td>
-          <td>{{ utilisateur.phone }}</td>
-          <td>
-            <a href="{% url 'utilisateur:utilisateur_update' utilisateur.pk %}" class="btn btn-warning btn-sm">Modifier</a>
-            <a href="{% url 'utilisateur:utilisateur_delete' utilisateur.pk %}" class="btn btn-danger btn-sm">Supprimer</a>
-          </td>
+            <td>{{ utilisateur.username }}</td>
+            <td>{{ utilisateur.email }}</td>
+            <td>{{ utilisateur.get_role_display }}</td>
+            <td>{{ utilisateur.is_active|yesno:"Actif,Désactivé" }}</td>
+            <td>{{ utilisateur.phone }}</td>
+            <td>
+                <a href="{% url 'utilisateur:utilisateur_update' utilisateur.pk %}" class="btn btn-warning btn-sm">Modifier</a>
+                <a href="{% url 'utilisateur:utilisateur_delete' utilisateur.pk %}" class="btn btn-danger btn-sm">Supprimer</a>
+                <!-- Bouton pour activer/désactiver l'utilisateur -->
+                <a href="{% url 'utilisateur:toggle_active' utilisateur.pk %}" class="btn btn-secondary btn-sm">
+                    {% if utilisateur.is_active %}Désactiver{% else %}Activer{% endif %}
+                </a>
+            </td>
         </tr>
-      {% endfor %}
+        {% empty %}
+        <tr>
+            <td colspan="6">Aucun utilisateur trouvé.</td>
+        </tr>
+        {% endfor %}
     </tbody>
-  </table>
+</table>
 {% endblock %}

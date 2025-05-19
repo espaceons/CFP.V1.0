@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Confirmation de Suppression{% endblock %}
+
+{% block title %}Confirmer la Suppression{% endblock %}
+
 {% block content %}
-  <h1>Êtes-vous sûr de vouloir supprimer {{ formateur.user.get_full_name }} ?</h1>
-  <form method="post">
+<h1>Confirmer la Suppression</h1>
+<p>Êtes-vous sûr de vouloir supprimer le formateur {{ formateur.user.first_name }} {{ formateur.user.last_name }} ?</p>
+<form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Supprimer</button>
-    <a href="{% url 'formateur:formateur_detail' formateur.pk %}" class="btn btn-secondary">Annuler</a>
-  </form>
+    <button type="submit" class="btn btn-danger">Confirmer</button>
+</form>
+<a href="{% url 'formateur:formateur_list' %}">Annuler</a>
 {% endblock %}

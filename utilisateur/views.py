@@ -2,12 +2,21 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, CustomUserForm
+from django.contrib.auth.decorators import user_passes_test
 
 from django.contrib.auth import login
 
 
 
 User = get_user_model()
+
+
+@user_passes_test(lambda u: u.role == 'ADMIN')  # Vérifiez si l'utilisateur est administrateur
+def toggle_user_active(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    user.is_active = not user.is_active
+    user.save()
+    return redirect('utilisateur:utilisateur_list')
 
 @login_required
 def utilisateur_list(request):
